@@ -6,7 +6,26 @@ module.exports = function(){
 		  		files: '',
 		  		folders: [],
 		  		selected_file: '',
-		  		directories: [],
+					directories: [],
+					croppedData: null
+			},
+			mounted () {
+				var self = this;
+				$('#confirm_crop_modal').on('shown.bs.modal', function (e) {
+					var croppingImage = document.getElementById('cropping-image');
+					window.cropper = new Cropper(croppingImage, {
+						crop: function(e) {
+							document.getElementById('new-img-width').innerText = Math.round(e.detail.width) + 'px';
+							document.getElementById('new-img-height').innerText = Math.round(e.detail.height) + 'px';
+							self.croppedData = {
+								dataX: Math.round(e.detail.x),
+								dataY: Math.round(e.detail.y),
+								dataHeight: Math.round(e.detail.height),
+								dataWidth: Math.round(e.detail.width)
+							};
+						}
+					});
+				})
 			},
 			methods: {
 				selectedFileIs: function(val){
@@ -17,6 +36,22 @@ module.exports = function(){
 				},
 				imgIcon: function(path){
 					return 'background-size: cover; background-image: url("' + path + '"); background-repeat:no-repeat; background-position:center center;display:inline-block; width:100%; height:100%;';
+				},
+				cropImage: function (e) {
+					this.croppedData = null;
+					var self = this;
+					if (window.cropper) {
+						window.cropper.destroy();
+					}
+					// document.getElementById('img_name').value = manager.selected_file.name
+					// document.getElementById('working_dir').value = '/' + manager.folders.join('/')		
+					$('#confirm_crop_modal').modal('show');
+				},
+				cropAndSave (e) {
+					console.log('crop and save')
+				},
+				cropAndCreate (e) {
+					console.log('crop and create')
 				}
 			}
 		});

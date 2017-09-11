@@ -142,6 +142,9 @@ return [
     'media' => [
         'add_new_folder'         => 'Add New Folder',
         'audio_support'          => 'Your browser does not support the audio element.',
+        'crop'                   => 'Crop',
+        'crop_and_create'        => 'Crop & Create',
+        'crop_image'             => 'Crop Image',
         'create_new_folder'      => 'Create New Folder',
         'delete_folder_question' => 'Deleting a folder will remove all files and folders contained inside',
         'destination_folder'     => 'Destination Folder',
@@ -160,6 +163,7 @@ return [
         'error_uploading'        => 'Upload Fail: Unknown error occurred!',
         'folder_exists_already'  => 'Sorry that folder already exists, please delete that folder if you wish '.
                                     'to re-create it',
+        'height'                 => 'Height: ',
         'image_does_not_exist'   => 'Image does not exist',
         'image_removed'          => 'Image removed',
         'library'                => 'Media Library',
@@ -175,6 +179,7 @@ return [
         'success_uploading'      => 'Image successfully uploaded!',
         'uploading_wrong_type'   => 'Upload Fail: Unsupported file format or It is too large to upload!',
         'video_support'          => 'Your browser does not support the video tag.',
+        'width'                  => 'Width: '
     ],
 
     'menu_builder' => [

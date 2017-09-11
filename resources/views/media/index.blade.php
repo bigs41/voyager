@@ -36,6 +36,9 @@
                             <button type="button" class="btn btn-default" id="delete"><i class="voyager-trash"></i>
                                 {{ __('voyager.generic.delete') }}
                             </button>
+                            <button v-if="selectedFileIs('image')" type="button" class="btn btn-default" id="crop" @click="cropImage($event)"><i class="voyager-crop"></i>
+                                {{ __('voyager.media.crop') }}
+                            </button>
                         </div>
                     </div>
 
@@ -248,6 +251,36 @@
                         </div>
                     </div>
                     <!-- End Move File Modal -->
+
+                    <!-- Crop Image Modal -->
+                    <div class="modal fade modal-danger" id="confirm_crop_modal">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal"
+                                            aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title"><i class="voyager-warning"></i> {{ __('voyager.media.crop_image') }}</h4>
+                                </div>
+
+                                <div class="modal-body">
+                                    <div class="crop-container">
+                                        <img v-if="selectedFileIs('image')" id="cropping-image" class="img img-responsive" :src="selected_file.path"/>
+                                    </div>
+                                    <div class="new-img-info">
+                                        {{ __('voyager.media.width') }} <span id="new-img-width"></span>, {{ __('voyager.media.height') }}<span id="new-img-height"></span>
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ __('voyager.generic.cancel') }}</button>
+                                    <button type="button" class="btn btn-warning" @click="cropAndSave($event)" id="crop_btn">{{ __('voyager.media.crop') }}</button>
+                                    <button type="button" class="btn btn-warning" @click="cropAndCreate($event)" id="crop_and_create_btn">{{ __('voyager.media.crop_and_create') }}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Crop Image Modal -->
 
                 </div><!-- #filemanager -->
 

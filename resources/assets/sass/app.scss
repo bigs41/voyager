@@ -11,6 +11,7 @@
 @import "node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker";
 @import "node_modules/simplemde/dist/simplemde.min";
 @import "node_modules/dropzone/dist/dropzone";
+@import "node_modules/cropperjs/dist/cropper";
 @import "fonts";
 
 /********** LOGIN STYLES ***********/
@@ -9773,8 +9774,17 @@ limitations under the License.
     font-size: 12px;
 }
 
+/********** Cropper Style **********/
 
-/********** END MEDIA CSS **********/
+#cropping-image {
+  margin: 0 auto;
+}
+
+div.cropper-container img {
+  max-width: 100%; /* This rule is very important, please do not ignore this! */
+}
+
+/********** END Cropper Style **********/
 
 /********** Overriding Data Tables Icons **********/
 
