@@ -36,7 +36,7 @@
                             <button type="button" class="btn btn-default" id="delete"><i class="voyager-trash"></i>
                                 {{ __('voyager.generic.delete') }}
                             </button>
-                            <button v-if="selectedFileIs('image')" type="button" class="btn btn-default" id="crop" @click="cropImage($event)"><i class="voyager-crop"></i>
+                            <button v-show="selectedFileIs('image')" type="button" class="btn btn-default" id="crop"><i class="voyager-crop"></i>
                                 {{ __('voyager.media.crop') }}
                             </button>
                         </div>
@@ -274,8 +274,8 @@
 
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">{{ __('voyager.generic.cancel') }}</button>
-                                    <button type="button" class="btn btn-warning" @click="cropAndSave($event)" id="crop_btn">{{ __('voyager.media.crop') }}</button>
-                                    <button type="button" class="btn btn-warning" @click="cropAndCreate($event)" id="crop_and_create_btn">{{ __('voyager.media.crop_and_create') }}</button>
+                                    <button type="button" class="btn btn-warning" id="crop_btn">{{ __('voyager.media.crop') }}</button>
+                                    <button type="button" class="btn btn-warning" id="crop_and_create_btn">{{ __('voyager.media.crop_and_create') }}</button>
                                 </div>
                             </div>
                         </div>

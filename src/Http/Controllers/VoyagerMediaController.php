@@ -310,4 +310,32 @@ class VoyagerMediaController extends Controller
             ], $code);
         }
     }
+
+    // Crop Image
+    public function crop(Request $request)
+    {
+        $createMode = $request->get('createMode') === 'true';
+        $x = $request->get('x');
+        $y = $request->get('y');
+        $height = $request->get('height');
+        $width = $request->get('width');
+        $imagePath = public_path('storage/' . request('working_dir') . '/' . request('originImgName'));
+
+        try {
+            $success = true;
+            $message = __('voyager.media.success_crop_image');
+            \Image::make($imagePath)
+            ->crop($width, $height, $x, $y)
+            ->save();
+        } catch (Exception $e) {
+            $success = false;
+            $message = $e->getMessage();
+        } finally {
+            return response()->json(compact([
+                'success',
+                'message'
+            ]));
+        }
+
+    }
 }

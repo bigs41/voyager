@@ -6,26 +6,7 @@ module.exports = function(){
 		  		files: '',
 		  		folders: [],
 		  		selected_file: '',
-					directories: [],
-					croppedData: null
-			},
-			mounted () {
-				var self = this;
-				$('#confirm_crop_modal').on('shown.bs.modal', function (e) {
-					var croppingImage = document.getElementById('cropping-image');
-					window.cropper = new Cropper(croppingImage, {
-						crop: function(e) {
-							document.getElementById('new-img-width').innerText = Math.round(e.detail.width) + 'px';
-							document.getElementById('new-img-height').innerText = Math.round(e.detail.height) + 'px';
-							self.croppedData = {
-								dataX: Math.round(e.detail.x),
-								dataY: Math.round(e.detail.y),
-								dataHeight: Math.round(e.detail.height),
-								dataWidth: Math.round(e.detail.width)
-							};
-						}
-					});
-				})
+					directories: []
 			},
 			methods: {
 				selectedFileIs: function(val){
@@ -36,22 +17,6 @@ module.exports = function(){
 				},
 				imgIcon: function(path){
 					return 'background-size: cover; background-image: url("' + path + '"); background-repeat:no-repeat; background-position:center center;display:inline-block; width:100%; height:100%;';
-				},
-				cropImage: function (e) {
-					this.croppedData = null;
-					var self = this;
-					if (window.cropper) {
-						window.cropper.destroy();
-					}
-					// document.getElementById('img_name').value = manager.selected_file.name
-					// document.getElementById('working_dir').value = '/' + manager.folders.join('/')		
-					$('#confirm_crop_modal').modal('show');
-				},
-				cropAndSave (e) {
-					console.log('crop and save')
-				},
-				cropAndCreate (e) {
-					console.log('crop and create')
 				}
 			}
 		});
@@ -292,6 +257,40 @@ module.exports = function(){
 					});
 				});
 
+				// Crop Image
+				$('#crop').click(function(){
+					// Cleanup the previous cropper
+					if (typeof cropper !== 'undefined' && cropper instanceof Cropper) {
+						cropper.destroy();
+					}
+					$('#confirm_crop_modal').modal('show');
+				});
+
+				// Cropper must init after the modal shown
+				$('#confirm_crop_modal').on('shown.bs.modal', function (e) {
+					var croppingImage = document.getElementById('cropping-image');
+					cropper = new Cropper(croppingImage, {
+						crop: function(e) {
+							document.getElementById('new-img-width').innerText = Math.round(e.detail.width) + 'px';
+							document.getElementById('new-img-height').innerText = Math.round(e.detail.height) + 'px';
+							croppedData = {
+								x: Math.round(e.detail.x),
+								y: Math.round(e.detail.y),
+								height: Math.round(e.detail.height),
+								width: Math.round(e.detail.width)
+							};
+						}
+					});
+				});
+
+				$('#crop_btn').click(function(){
+					cropImage(false);
+				});
+
+				$('#crop_and_create_btn').click(function(){
+					cropImage(true);
+				});
+
 				// $('#upload').click(function(){
 				// 	$('#upload_files_modal').modal('show');
 				// });
@@ -341,7 +340,7 @@ module.exports = function(){
 						var folder_location = '/';
 					}
 					$('#file_loader').fadeIn();
-					$.post(options.baseUrl+'/media/files', { folder:folder_location, _token: CSRF_TOKEN, _token: CSRF_TOKEN }, function(data) {
+					$.post(options.baseUrl+'/media/files', { folder:folder_location, _token: CSRF_TOKEN }, function(data) {
 						$('#file_loader').hide();
 						manager.files = data;
 						files.trigger('click');
@@ -358,7 +357,6 @@ module.exports = function(){
 						console.log(data);
 						manager.directories = data;
 					});
-
 				}
 
 				function setCurrentSelected(cur){
@@ -372,6 +370,25 @@ module.exports = function(){
 					if (bytes == 0) return '0 Bytes';
 					var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
 					return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
+				}
+
+				function cropImage(createMode) {
+					croppedData.originImgName = manager.selected_file.name
+					croppedData.working_dir = '/' + manager.folders.join('/')
+					croppedData.createMode = createMode
+	
+					var postData = Object.assign(croppedData, {_token: CSRF_TOKEN})
+					$.post(options.baseUrl+'/media/crop', postData, function(data){
+						console.log(data)
+						if(data.success == true){
+								toastr.success(data.message)
+								console.log(manager.folders)
+								getFiles(manager.folders)
+								$('#confirm_crop_modal').modal('hide');
+						} else {
+								toastr.error(data.error, "Whoops!");
+						}
+					});
 				}
 			}
 		};

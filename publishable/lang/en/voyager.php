@@ -175,6 +175,7 @@ return [
         'no_files_in_folder'     => 'No files in this folder.',
         'nothing_selected'       => 'No file or folder selected',
         'rename_file_folder'     => 'Rename File/Folder',
+        'success_crop_image'     => 'Successfully crop the image',
         'success_uploaded_file'  => 'Successfully uploaded new file!',
         'success_uploading'      => 'Image successfully uploaded!',
         'uploading_wrong_type'   => 'Upload Fail: Unsupported file format or It is too large to upload!',
