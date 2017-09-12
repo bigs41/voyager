@@ -76,7 +76,7 @@
                                                         <?php /* Fix
                                                             style="background-size: cover; background-image: url(@{{ encodeURI(file.path) }}); background-repeat:no-repeat; background-position:center center;display:inline-block; width:100%; height:100%;"></div>
                                                             */ ?>
-                                                         :style="imgIcon(file.path)"></div>
+                                                         :style="imgIcon(file.path, file.last_modified)"></div>
                                                 </template>
                                                 <template v-if="file.type.includes('video')">
                                                     <i class="icon voyager-video"></i>
@@ -136,7 +136,7 @@
                                     <div class="detail_img">
                                         <div :class="selected_file.type">
                                             <template v-if="selectedFileIs('image')">
-                                                <img :src="selected_file.path"/>
+                                                <img :src="selected_file.path + '?' + selected_file.last_modified"/>
                                             </template>
                                             <!--template v-if="selected_file.type.includes('video')">
                                                 <video width="100%" height="auto" controls>

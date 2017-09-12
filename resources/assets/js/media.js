@@ -15,8 +15,8 @@ module.exports = function(){
 					}
 					return false;
 				},
-				imgIcon: function(path){
-					return 'background-size: cover; background-image: url("' + path + '"); background-repeat:no-repeat; background-position:center center;display:inline-block; width:100%; height:100%;';
+				imgIcon: function(path, lastModified){
+					return 'background-size: cover; background-image: url("' + path + '?' + lastModified + '"); background-repeat:no-repeat; background-position:center center;display:inline-block; width:100%; height:100%;';
 				}
 			}
 		});
