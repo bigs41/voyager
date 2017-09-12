@@ -271,8 +271,8 @@ module.exports = function(){
 					var croppingImage = document.getElementById('cropping-image');
 					cropper = new Cropper(croppingImage, {
 						crop: function(e) {
-							document.getElementById('new-img-width').innerText = Math.round(e.detail.width) + 'px';
-							document.getElementById('new-img-height').innerText = Math.round(e.detail.height) + 'px';
+							document.getElementById('new-image-width').innerText = Math.round(e.detail.width) + 'px';
+							document.getElementById('new-image-height').innerText = Math.round(e.detail.height) + 'px';
 							croppedData = {
 								x: Math.round(e.detail.x),
 								y: Math.round(e.detail.y),
@@ -284,7 +284,9 @@ module.exports = function(){
 				});
 
 				$('#crop_btn').click(function(){
-					cropImage(false);
+					if (window.confirm($(this).data('confirm'))) {
+						cropImage(false);
+					}
 				});
 
 				$('#crop_and_create_btn').click(function(){
@@ -373,7 +375,7 @@ module.exports = function(){
 				}
 
 				function cropImage(createMode) {
-					croppedData.originImgName = manager.selected_file.name
+					croppedData.originImageName = manager.selected_file.name
 					croppedData.working_dir = '/' + manager.folders.join('/')
 					croppedData.createMode = createMode
 	

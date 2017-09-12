@@ -265,16 +265,16 @@
 
                                 <div class="modal-body">
                                     <div class="crop-container">
-                                        <img v-if="selectedFileIs('image')" id="cropping-image" class="img img-responsive" :src="selected_file.path"/>
+                                        <img v-if="selectedFileIs('image')" id="cropping-image" class="img img-responsive" :src="selected_file.path + '?' + selected_file.last_modified"/>
                                     </div>
-                                    <div class="new-img-info">
-                                        {{ __('voyager.media.width') }} <span id="new-img-width"></span>, {{ __('voyager.media.height') }}<span id="new-img-height"></span>
+                                    <div class="new-image-info">
+                                        {{ __('voyager.media.width') }} <span id="new-image-width"></span>, {{ __('voyager.media.height') }}<span id="new-image-height"></span>
                                     </div>
                                 </div>
 
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">{{ __('voyager.generic.cancel') }}</button>
-                                    <button type="button" class="btn btn-warning" id="crop_btn">{{ __('voyager.media.crop') }}</button>
+                                    <button type="button" class="btn btn-warning" id="crop_btn" data-confirm="{{ __('voyager.media.crop_override_confirm') }}">{{ __('voyager.media.crop') }}</button>
                                     <button type="button" class="btn btn-warning" id="crop_and_create_btn">{{ __('voyager.media.crop_and_create') }}</button>
                                 </div>
                             </div>

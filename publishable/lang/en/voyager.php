@@ -144,6 +144,7 @@ return [
         'audio_support'          => 'Your browser does not support the audio element.',
         'crop'                   => 'Crop',
         'crop_and_create'        => 'Crop & Create',
+        'crop_override_confirm'  => 'It will override the original image, aru you sure?',
         'crop_image'             => 'Crop Image',
         'create_new_folder'      => 'Create New Folder',
         'delete_folder_question' => 'Deleting a folder will remove all files and folders contained inside',

@@ -319,14 +319,24 @@ class VoyagerMediaController extends Controller
         $y = $request->get('y');
         $height = $request->get('height');
         $width = $request->get('width');
-        $imagePath = public_path('storage/' . request('working_dir') . '/' . request('originImgName'));
-
+        $originImagePath = public_path('storage' . request('working_dir') . '/' . request('originImageName'));
+        
         try {
             $success = true;
             $message = __('voyager.media.success_crop_image');
-            \Image::make($imagePath)
+            if ($createMode) {
+                // create a new image with the cpopped data
+                $fileNameParts = explode('.', request('originImageName'));
+                array_splice($fileNameParts, count($fileNameParts)-1, 0, 'cropped_' . time());
+                $newImageName = implode('.', $fileNameParts);
+                $destImagePath = public_path('storage' . request('working_dir') . '/' . $newImageName);
+            } else {
+                // override the original image
+                $destImagePath = $originImagePath;
+            }
+            Image::make($originImagePath)
             ->crop($width, $height, $x, $y)
-            ->save();
+            ->save($destImagePath);
         } catch (Exception $e) {
             $success = false;
             $message = $e->getMessage();
