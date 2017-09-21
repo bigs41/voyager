@@ -22133,7 +22133,9 @@ module.exports = function () {
 					}
 					return false;
 				},
-				imgIcon: function imgIcon(path, lastModified) {
+				imgIcon: function imgIcon(path) {
+					var lastModified = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+
 					return 'background-size: cover; background-image: url("' + path + '?' + lastModified + '"); background-repeat:no-repeat; background-position:center center;display:inline-block; width:100%; height:100%;';
 				}
 			}
